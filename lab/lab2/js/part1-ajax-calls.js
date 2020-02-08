@@ -9,3 +9,21 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
   maxZoom: 20,
   ext: 'png'
 }).addTo(map);
+
+var parsed;
+
+$.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json')
+.done(function(response) {parsed = JSON.parse(response)})
+//$.getJSON similar to ajax but also parsed for you
+//promise.done(console.log) //whenever it's done
+//can also be
+//promise.done(function (x) Pconsole.log(x))
+console.log(parsed)
+bikecrash_location = _.map(parsed, function (obj) {
+  return {'lat' : obj.lat_final, 'lng':obj.long_final
+}
+})
+
+console.log(bikecrash_location)
+
+bikecrash_location.each(function (each) {L.marker([each.lat, each.lng]]).addTo(map)})
