@@ -26,7 +26,11 @@
 /* =====================
   Define a resetMap function to remove markers from the map and clear the array of markers
 ===================== */
-var resetMap = function() {
+var resetMap = function () {
+   _.each(promise, function (x) {
+     map.removeLayer(x);
+     return x = 0;
+})};
   /* =====================
     Fill out this function definition
   ===================== */
@@ -38,6 +42,10 @@ var resetMap = function() {
   it down!
 ===================== */
 var getAndParseData = function() {
+  var promise = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json")
+  .done(function(x){return JSON.parse(x)});
+  return promise;
+
   /* =====================
     Fill out this function definition
   ===================== */
@@ -48,6 +56,10 @@ var getAndParseData = function() {
   criteria happens to be — that's entirely up to you)
 ===================== */
 var plotData = function() {
+  _.map(promise, function (obj) {
+    return L.marker([obj.lat_final, obj.long_final]).addTo(map)}
+
+
   /* =====================
     Fill out this function definition
   ===================== */

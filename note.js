@@ -33,4 +33,17 @@ _.chain(myData)
 .value()
 
 
+sideEffect = function () {
+  x = 123
+  console.log(x)}
+pureF = function () {
+  var x = 123  //ATTENTION! value of x will be changed!
+  console.log(x)}
+
 promise = $.ajax('https://github.com/OpheliaLYJ/MUSA611-CPLN692-week4/blob/master/data/phillySchools.csv?argument1=123&argument2=abc') //load api data
+promise.done(function(x) {theData = x}) //whenever it's done
+//a promise object
+//can be simplified as promise = $.ajax().done(function (x) {theData = x})
+//theData is a string
+parsedData = JSON.parse(theData)
+parsedData.map(function (obj) {return {'lat' : obj.lat_final, 'lng':obj.long_final}})
