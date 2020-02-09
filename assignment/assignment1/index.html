@@ -36,7 +36,7 @@
     this element to match exactly, just go with the default style on your system.
     You should be able to do most styling for this assignment with the CSS
     properties `margin`, `padding`, `font-weight`, `font-size`, `background-color`,
-    and `color`. Positioning the "Hide filters" button is a little trickier: 
+    and `color`. Positioning the "Hide filters" button is a little trickier:
     Look into `float` or absolute positioning, but feel free to try out
     a different approach. If you find yourself struggling, remember to seek
     help on stackoverflow and the class gitter - we haven't covered CSS at
@@ -53,10 +53,43 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
+      <input type="button" class="hidefilter" value="Hide Filters">
+      <h2 class = 'filter'>Filters</h2>
+      <h3>By Name</h3>
+      <input id="name" type="text">
+      <h3>By Grade</h3>
+      <select id = "gradeoption">
+          <option value = "All">All Grades</option>
+          <option value = "2">two</option>
+          <option value = "3">three</option>
+          <option value = "4">four</option>
+      </select>
+      <br>
+      <br>
+      <hr size="3" width="100%" align="left" color="Lightblue">
+      <h2>Schools</h2>
+      <div class = "school">
+        <br>
+        <h3 class = "schoolname">Henry, Charles W.</h3>
+        <h3 class = "gradeinfo">Elem/Middle</h3>
+        <h4 class = "address">601 Carpenter La.</h4>
+        <h4 class = "zipcode">19119 - 3405</h4>
+      </div>
+      <div class = "school">
+        <br>
+        <h3 class = "schoolname">Universal Creighton Charter School</h3>
+        <h3 class = "gradeinfo">Elem/Middle</h3>
+        <h4 class = "address">5401 Tabor Ave</h4>
+        <h4 class = "zipcode">19120 - 3641</h4>
+      </div>
+      <div class = "school">
+        <br>
+        <h3 class = "schoolname">Marshall, John</h3>
+        <h3 class = "gradeinfo">Elementary School</h3>
+        <h4 class = "address">601 Carpenter La.</h4>
+        <h4 class = "zipcode">19119 - 3405</h4>
+      </div>
 
-      <!-- =====================
-      Add HTML!
-      ====================== -->
 
     </div>
     <!-- Map -->
