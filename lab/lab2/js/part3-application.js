@@ -30,6 +30,10 @@ var resetMap = function() {
   /* =====================
     Fill out this function definition
   ===================== */
+  _.each(myMarkers, function(marker) {
+    map.removeLayer(marker);
+  })
+  myMarkers = [];
 };
 
 /* =====================
@@ -41,6 +45,11 @@ var getAndParseData = function() {
   /* =====================
     Fill out this function definition
   ===================== */
+  $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json").done(
+    function(data) {
+      myData = JSON.parse(data);
+    }
+  )
 };
 
 /* =====================
@@ -51,4 +60,15 @@ var plotData = function() {
   /* =====================
     Fill out this function definition
   ===================== */
+  filteredData = _.filter(myData, function(data) {
+    var numericFilter = data.PERSON_COU > numericField1 && data.PERSON_COU < numericField2;
+    var booleanFilter = (data.DISTRACTED == 0) == booleanField;
+    var stringFilter = data.POLICE_AGC == stringField;
+    return numericFilter && booleanFilter && stringFilter;
+  });
+  myMarkers = _.map(filteredData, function(data) {return L.marker([data['LAT'], data['LNG']])});
+  _.each(myMarkers, function(marker) {
+    marker.addTo(map);
+  });
+
 };
