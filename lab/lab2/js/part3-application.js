@@ -62,8 +62,8 @@ var plotData = function() {
   ===================== */
   filteredData = _.filter(myData, function(data) {
     var numericFilter = data.PERSON_COU > numericField1 && data.PERSON_COU < numericField2;
-    var booleanFilter = (data.DISTRACTED == 0) == booleanField;
-    var stringFilter = data.POLICE_AGC == stringField;
+    var booleanFilter = (data.DISTRACTED === 0) === booleanField;
+    var stringFilter = String(data.POLICE_AGC) === stringField ;
     return numericFilter && booleanFilter && stringFilter;
   });
   myMarkers = _.map(filteredData, function(data) {return L.marker([data['LAT'], data['LNG']])});
