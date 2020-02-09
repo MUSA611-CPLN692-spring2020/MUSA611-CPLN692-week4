@@ -25,3 +25,65 @@ body {
     overflow-y: auto;
     padding: 20px;
 }
+
+h3{
+  font-weight:normal;
+}
+
+.hidefilter{
+  width: 35%;
+  postition: relative;
+  float:right;
+}
+
+.filter{
+  display:inline;
+}
+
+input{
+  width: 100%;
+}
+
+hr{
+  top:20px;
+}
+
+select{
+  font-size: 14px;
+  width: 150px;
+}
+
+.school{
+  background-color: Lightblue;
+  position: relative;
+  margin-bottom: -10px;
+}
+
+.schoolname{
+  position: relative;
+  left:8px;
+  right:8px;
+}
+
+.gradeinfo{
+  color: gray;
+  position: relative;
+  bottom:12pt;
+  left:8px;
+  right:8px;
+}
+
+.address,.zipcode{
+  font-weight: normal;
+  position: relative;
+  left:8px;
+  right:8px;
+}
+
+.address{
+  bottom: 15px;
+}
+
+.zipcode{
+  bottom: 35px;
+}
