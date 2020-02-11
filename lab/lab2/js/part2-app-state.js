@@ -33,19 +33,37 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-crime-snippet.json");
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+var parseData = function(response) {var parseOne= JSON.parse(response);
+  var holder =[];
+  holder[0] = Object.keys(parseOne[0]);
+  for (i=0; i<parseOne.length; i++) {
+    holder[i+1]=Object.values(parseOne[i]);
+  }
+  return holder
+};
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+
+var makeMarkers = function(marker){
+  var holder2 =[];
+  for (i=1; i< marker.length; i++){
+    holder2[i-1] = L.marker([marker[i][7],marker[i][8]])
+  }
+  return holder2
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(plot) {
+  for (i=0; i< plot.length; i++){
+    plot[i].addTo(map)//why if i use return plot[1].addTo(map), only the last marker was returned to the map?
+  }
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +84,20 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+/*
+var removeMarkers = function(points) {
+  for (i = 0; i< points.length; i++){
+    map.removeLayer(points[i])
+  }
+};
+*/
+
+var removeMarkers = function(points) {
+  _.each(points,function(point){
+    map.removeLayer(point)
+  })
+};
+
 
 /* =====================
   Optional, stretch goal
