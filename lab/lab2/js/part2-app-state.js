@@ -33,7 +33,8 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-solar-installations.json");
+downloadData.done(console.log);
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
