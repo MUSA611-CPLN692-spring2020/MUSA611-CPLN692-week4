@@ -31,21 +31,44 @@
        }
        var one = justOne();
 ===================== */
-
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-solar-installations.json");
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
-
+var parseData = function(x) {
+    return object = JSON.parse(x).map(function(x){
+      return {'lat':x.LAT,'lng':x.LONG_};
+    })
+};
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+/*
+var makeMarkers = function(a){
+  for (var i=0; i< a.length; i++){
+    marker.push({'lat':a[i].LAT,'lng':a[i].LONG_})
+  }
+  var marker2 = []
+  for (var j=0; j< marker.length; j++){
+    marker2.push(Object.values(marker[j]))
+  }return marker2
+};*/
+var makeMarkers = function(a){
+  return _.map(a,function(x){return L.marker(Object.values(x))})
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+
+var plotMarkers = function(x) {
+   return _.map(x,function(a){return a.addTo(map)})
+}
+/*
+var plotMarkers = function(x) {
+  for (i=0; i < x.length; i++){
+    L.marker([x[i].lat,x[i].lng]).addTo(map)
+  }
+}*/
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +89,23 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+
+var removeMarkers = function(x) {
+  return _.map(x,function(a){map.removeLayer(a)})
+}
+
+/*
+var removeMarkers = function(x){
+  for(var i = 0; i<x.length; i++){
+    var cities = L.layerGroup(L.marker([x[i][0],x[i][1]]))
+  }map.removeLayer(cities)
+
+}
+*/
+//map.remove
+//var layer = L.marker(latlng).addTo(map);
+//layer.addTo(map);
+//layer.remove();
 
 /* =====================
   Optional, stretch goal
