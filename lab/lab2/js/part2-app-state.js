@@ -32,20 +32,47 @@
        var one = justOne();
 ===================== */
 
-// Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
-
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+
+// Use the data source URL from lab 1 in this 'ajax' function:
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-solar-installations.json").done(parseData);
 
 // Write a function to use your parsed data to create a bunch of
+var parseData = function(response) {
+  var parsed = JSON.parse(response);
+  return parsed;
+};
+
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(points) {
+  var markers = [];
+
+  points.forEach(function(point){
+      var lat = point.Y;
+      var lon = point.X;
+
+      var feature = {type: 'Feature',
+          properties: point,
+          geometry: {
+              type: 'Point',
+              coordinates: [lon,lat]
+          }
+      };
+
+      markers.push(feature);
+
+  });
+
+  return markers;
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(markers) {
+  var geoJson = { type: 'FeatureCollection', features: markers };
+  L.geoJson(geoJson).addTo(map);
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
