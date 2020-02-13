@@ -33,19 +33,28 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json');
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+var parseData = function(dat) {return JSON.parse(dat).map(function(obj){
+   return {'lat':obj.lat_final,'lng':obj.long_final}
+})};
+
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(mark) {return _.map(mark,function(eachmark){
+  return L.marker([eachmark.lat,eachmark.lng])
+} )};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(mapit) {L.layerGroup(mapit).addTo(map)};
+
+//var plotMarkers = function(mapit) {return _.map(mapit,function(eachit){
+//  return eachit.addTo(map)
+//})};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -64,9 +73,12 @@ var plotMarkers = function() {};
   user's input.
 ===================== */
 
+
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(removeit) {_.map(removeit,function(x){
+  map.removeLayer(x)
+})};
 
 /* =====================
   Optional, stretch goal
@@ -80,6 +92,7 @@ var removeMarkers = function() {};
 /* =====================
  Leaflet setup - feel free to ignore this
 ===================== */
+
 
 var map = L.map('map', {
   center: [39.9522, -75.1639],
@@ -100,6 +113,7 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
+  console.log(markers);
   plotMarkers(markers);
   removeMarkers(markers);
 });
