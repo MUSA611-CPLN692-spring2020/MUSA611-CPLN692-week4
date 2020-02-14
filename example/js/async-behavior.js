@@ -67,4 +67,18 @@ addButton.click(function() {
   runAfter(addOneToCounter, oldCount, delay, delayFunc);
 });
 
+//promise = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/MUSA611-CPLN692-week4/master/data/phillySchools.csv? OBJECTED = 1 && OBJECTED = 2')
+//promise.done(console.log())
+plus2 = function(s){
+  return 2+s
+}
+theNumberFive = plus2(3)
 
+sideEffect = function(){
+  x = 123
+  console.log(123)}
+
+pureF = function(){
+  var x = 123
+  console.log(123)
+}
