@@ -130,6 +130,8 @@ Use _.groupBy to organize the baked goods by type.
 
 var query7;
 
+query7 = _.groupBy(bakedGoods,'type');
+
 console.log('Grouped by type:', query7);
 
 /* =====================
@@ -153,7 +155,36 @@ Whole Wheat ... $4.49
 
 ===================== */
 
-// printMenu2(query7);
+ //Solution 1: without using _.template
+
+function printMenu1(obj){
+    var keys = Object.keys(obj);
+    for(var i = 0; i < keys.length; i++){
+      var key = keys[i];
+      console.log(key);
+      for (var j = 0; j < obj[key].length; j++) {
+        console.log(obj[key][j].name + "... $" + obj[key][j].price);
+      }
+    }
+}
+
+printMenu1(query7);
+
+// Solution 2: Using _.template
+
+function printMenu2(obj){
+    var keys = Object.keys(obj);
+    for(var i = 0; i < keys.length; i++){
+      var key = keys[i];
+      console.log(key);
+      for (var j = 0; j < obj[key].length; j++) {
+        var compiled = _.template("<% print(name + '... $' + price);  %>");
+        console.log(compiled(obj[key][j]));
+      }
+    }
+}
+
+printMenu2(query7);
 
 /* =====================
 Stretch Goal (seriously, this is a bit tough at first!):

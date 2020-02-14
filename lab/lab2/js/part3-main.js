@@ -5,7 +5,7 @@
 /* =====================
   Call getAndParseData to grab our dataset through a jQuery.ajax call ($.ajax)
 ===================== */
-getAndParseData();
+//getAndParseData();  
 
 /* =====================
   The code here is triggered when you click on the button with ID #my-button
