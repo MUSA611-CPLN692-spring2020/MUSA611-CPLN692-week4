@@ -26,15 +26,15 @@
 /* =====================
   Define a resetMap function to remove markers from the map and clear the array of markers
 ===================== */
-var resetMap = function(marks) {
+var resetMap = function() {
   /* =====================
     Fill out this function definition
   ===================== */  
-  _.map(marks, function(circle){
+  _.map(markers, function(circle){
     map.removeLayer(circle);
   });
 
-};
+}
 
 /* =====================
   Define a getAndParseData function to grab our dataset through a jQuery.ajax call ($.ajax). It
@@ -50,7 +50,7 @@ var getAndParseData = function(data) {
   var parsed = JSON.parse(data);
   parsed = _.map(parsed,function(arr){
     delete arr['LAT','LONG_','THUMB_URL'];
-    arr.isold = arr.YEARBUILT >= 2010;
+    arr.isold = arr.YEARBUILT < 2010;
     arr.islarge = arr.KW > 54;
     return arr;
   });
@@ -78,23 +78,28 @@ function developer(data,string){
   }
 function year2010(data, checker){
     filter_data = _.filter(data, function(arr){
-      if(checker){
-        if(arr.YEARBUILT < 2010){
+      if(checker == true){
+        if(arr.isold){
           return arr;
         } else{
-          if(arr.YEARBUILT >= 2010){
+          if(!arr.isold){
             return arr;
           }
         }
       }})
   }
 
+var markers;
+
 function plotmarker(data){
-    _.map(data, function(arr){
-      var pathOpts = {'radius': Math.log(arr.KW) * 5, 
-                'fillColor': '#0000FF'}  
-      var circle = L.circleMarker([arr.Y, arr.X], pathOpts)
-        .bindPopup(arr.DEVELOPER).addTo(map);
+    markers = _.map(data, function(arr){
+                var pathOpts = {'radius': Math.log(arr.KW) * 5, 
+                                 'fillColor': '#0000FF'}  
+                var circle = L.circleMarker([arr.Y, arr.X], pathOpts).bindPopup(arr.DEVELOPER);
+                return circle;
+              })
+    _.map(markers, function(arr){
+      arr.addTo(map);
     })
   }
 
