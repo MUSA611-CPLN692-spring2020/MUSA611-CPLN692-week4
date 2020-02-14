@@ -31,21 +31,49 @@
        }
        var one = justOne();
 ===================== */
+/*
+var parsed;
+$.ajax('URL')
+.done(function(response){
+  parsed = JSON.parse(response);
+})
+*/
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/world-country-capitals.json");
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+var parseData = function(downloadData) {
+  var countries = JSON.parse(downloadData);
+  var markerCoordinates = countries.map(function(country){
+    var coords = {
+      lat: country.CapitalLatitude,
+      long: country.CapitalLongitude
+    };
+    return coords;
+  });
+  return markerCoordinates;
+};
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(parsedData){
+  var markers = [];
+  markers = parsedData.map(function(coords){
+    return L.marker([coords.lat, coords.long]);
+  });
+  return markers;
+};
+
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(markers) {
+  markers.forEach(function(marker){
+    return marker.addTo(map);
+  });
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +94,11 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(markers) {
+  markers.forEach(function(marker){
+    return map.removeLayer(marker);
+  });
+};
 
 /* =====================
   Optional, stretch goal
@@ -103,3 +135,14 @@ downloadData.done(function(data) {
   plotMarkers(markers);
   removeMarkers(markers);
 });
+
+/*
+for each thing in the list of markers, probably just add to Map
+then all the data on those files will be in the applications
+then we remove markers (look through leaflet documentation for how to remove a marker = map.remove?)
+should have an empty map at the end
+
+probably don't worry about lab 2 part 3
+
+don't do week 4 assignment
+*/
