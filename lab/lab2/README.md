@@ -13,6 +13,7 @@ to find the appropriate URL for AJAX, otherwise you'll grab the HTML document
 which contains the *styled* JSON. This is not what we want!
 
 
+
 #### Part 2: Application state: storing and removing information
 
 In [part2-app-state.js](js/part2-app-state.js), you will be
@@ -35,4 +36,3 @@ sense of how the pieces work.
 
 In particular, look at the variables that are being set in `main.js` and
 think about how function scope is being used.
-
