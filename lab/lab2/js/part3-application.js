@@ -71,21 +71,22 @@ function kwfilter(data,min,max){
   }
 function developer(data,string){
     filter_data = _.filter(data, function(arr){
-      if(arr.DEVELOPER.toUpperCase().indexOf(string) >= 0){
+      if(arr.DEVELOPER.indexOf(string) >= 0){
         return arr;
       }
     })
   }
 function year2010(data, checker){
     filter_data = _.filter(data, function(arr){
-      if(checker == true){
+      if(!checker){
+        if(!arr.isold){
+          return arr;
+        } 
+      else {
         if(arr.isold){
           return arr;
-        } else{
-          if(!arr.isold){
-            return arr;
-          }
         }
+      }
       }})
   }
 
