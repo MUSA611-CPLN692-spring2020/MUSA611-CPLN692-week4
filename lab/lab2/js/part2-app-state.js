@@ -118,5 +118,16 @@ downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
   plotMarkers(markers);
-  removeMarkers(markers);
+  removeMarkers(markers); //Comment it out to show the markers
+});
+
+//Filtered version (capitals with positive longitude)
+downloadData.done(function(data) {
+  var parsed = parseData(data);
+  var positiveLong=_.filter(parsed, function(x){
+    return (x.CapitalLongitude > 0);  //Return an array!
+  });
+  var markers2=makeMarkers(positiveLong);
+  plotMarkers(markers2);
+   //Comment it out to show the markers
 });
