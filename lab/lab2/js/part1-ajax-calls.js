@@ -9,3 +9,9 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
   maxZoom: 20,
   ext: 'png'
 }).addTo(map);
+
+$.ajax('https://raw.githubusercontent.com/Chyanne-E/MUSA611-CPLN692-week4/master/data/phillySchools.csv');
+
+var json = $.ajax('https://raw.githubusercontent.com/Chyanne-E/MUSA611-CPLN692-week4/master/data/phillySchools.js');
+
+console.log(json);
