@@ -27,9 +27,8 @@
   Define a resetMap function to remove markers from the map and clear the array of markers
 ===================== */
 var resetMap = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+  _.each(myMarkers, function(x){return map.removeLayer(x);});
+  myMarkers = [];
 };
 
 /* =====================
@@ -38,9 +37,7 @@ var resetMap = function() {
   it down!
 ===================== */
 var getAndParseData = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+  $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json').done(function(x){return myData = JSON.parse(x);});
 };
 
 /* =====================
@@ -48,7 +45,12 @@ var getAndParseData = function() {
   criteria happens to be — that's entirely up to you)
 ===================== */
 var plotData = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+  var boo = _.filter(myData,function(x){return x.FATAL === 1;});
+  var bus = _.filter(myData,function(x){return x.SCH_BUS_IN==='N';});
+  var ppl = _.filter(myData, function(x){return x.PERSON_COU <= numericField2 && x.PERSON_COU >= numericField1;});
+  var all = _.intersection(boo, bus, ppl);
+  var myMarkers = _.map(all, function(x){
+    return L.marker([x.lat_final, x.long_final]);
+  });
+  _.each(myMarkers, function(x){return x.addTo(map);});
 };
