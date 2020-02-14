@@ -33,19 +33,46 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/world-country-capitals.json');
 
+console.log(downloadData);
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+var parseData = function(downloadData){
+
+var data = JSON.parse(downloadData);
+
+var markerCordinates = data.map(function(country){
+  var coords={
+    lat: country.CapitalLatitude,
+    long: country.CapitalLongitude
+  };
+  return coords;
+});
+return markerCordinates;
+
+
+};
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(parsedData) {
+  var markers=[];
+
+  markers= parsedData.map(function(coords){
+    return L.marker([coords.lat,coords.long]);
+  });
+return markers;
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(markers) {
+  markers.forEach(function(marker){
+    return marker.addTo(map);
+  });
+
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +93,12 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(markers) {
+  markers.forEach(function(marker){
+    return map.removeLayer(marker);
+  });
+
+};
 
 /* =====================
   Optional, stretch goal
@@ -83,7 +115,7 @@ var removeMarkers = function() {};
 
 var map = L.map('map', {
   center: [39.9522, -75.1639],
-  zoom: 14
+  zoom: 4
 });
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -101,5 +133,5 @@ downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
   plotMarkers(markers);
-  removeMarkers(markers);
+  //removeMarkers(markers);
 });
