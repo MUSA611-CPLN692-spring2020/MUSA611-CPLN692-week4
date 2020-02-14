@@ -145,22 +145,16 @@ Whole Wheat ... $4.49
 
 var printMenu2 = function(x) {
 for (i=0;i<x.length;i++){
-  console.log(x[i]);
   console.log(x[i].name,'...',x[i].price);
 
 }
 
 };
 
-printMenu2(query7);
+printMenu2(bakedGoods);
 
 
 
-
-
-
-
-console.log(query7);
 
 /* =====================
 Stretch Goal (seriously, this is a bit tough at first!):
