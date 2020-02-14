@@ -9,3 +9,5 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
   maxZoom: 20,
   ext: 'png'
 }).addTo(map);
+
+$.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-crime-snippet.json').done(function(x){console.log(x)});
