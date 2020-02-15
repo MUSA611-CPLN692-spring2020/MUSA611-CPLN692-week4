@@ -33,19 +33,34 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
-
+var downloadData = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-solar-installations.json');
 // Write a function to prepare your data (clean it up, organize it
-// as you like, create fields, etc)
-var parseData = function() {};
+// as you like, create fields, etc
+var parseData = function(data) {return parsed=JSON.parse(data)};
+
+// parseData returns an array of dictionary objects 
 
 // Write a function to use your parsed data to create a bunch of
-// marker objects (don't plot them!)
-var makeMarkers = function() {};
+// marker objects (don't plot them!
+var create_marker = function(row){
+  var lat=row.Y;
+  var lng=row.X;
+  var label=row.NAME;
+  var yearBuilt = row.YEARBUILT;
+  var marker = L.marker([lat, lng]).bindPopup("<b>Name: </b>"+label+"<br>Year Built: "+yearBuilt).openPopup();
+  return marker;
+}
+
+var makeMarkers = function(cleanedData) {
+  markers = _.map(cleanedData, create_marker);
+  return(markers);
+}
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(markers) {
+  _.each(markers, function(x){x.addTo(map)});
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +81,9 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(markers) {
+  _.each(markers, function(m){map.removeLayer(m)})
+};
 
 /* =====================
   Optional, stretch goal
@@ -99,7 +116,15 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 
 downloadData.done(function(data) {
   var parsed = parseData(data);
+  console.log(parsed);
   var markers = makeMarkers(parsed);
+  console.log(markers);
   plotMarkers(markers);
   removeMarkers(markers);
 });
+
+// get a list of markers by using _.map 
+// use a list of markers 
+// forEach marker in list of markers, add to map 
+
+// remove function ?? stretch? look through leaflet documentation
