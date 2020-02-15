@@ -128,6 +128,5 @@ downloadData.done(function(data) {
     return (x.CapitalLongitude > 0);  //Return an array!
   });
   var markers2=makeMarkers(positiveLong);
-  plotMarkers(markers2);
-   //Comment it out to show the markers
+  plotMarkers(markers2); //Plot!
 });
