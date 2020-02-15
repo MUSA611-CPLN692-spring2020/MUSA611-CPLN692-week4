@@ -66,7 +66,9 @@ Is printMenu a function? Answer this question with underscore. Should evaluate
 to true.
 ===================== */
 
+
 var query1;
+query1 = _.isFunction(printMenu);
 
 console.log('printMenu is a function:', query1);
 
@@ -76,7 +78,7 @@ to true.
 ===================== */
 
 var query2;
-
+query2 = _.isArray(bakedGoods);
 console.log('bakedGoods is an array:', query2);
 
 /* =====================
@@ -85,7 +87,7 @@ underscore. Should evaluate to true.
 ===================== */
 
 var query3;
-
+query3 = _.isObject(_.first(bakedGoods));
 console.log('The first element in bakedGoods is an object:', query3);
 
 /* =====================
@@ -93,6 +95,7 @@ Use _.where to return all cakes. Or bread. Whichever is your favorite.
 ===================== */
 
 var query4;
+query4 = _.where(bakedGoods, {type: "Cake"});
 
 console.log('All bread. Or cakes:', query4);
 
@@ -101,6 +104,7 @@ Use _.filter to return all baked goods that cost more than $4.
 ===================== */
 
 var query5;
+query5 = _.filter(bakedGoods, function(b){return b.price>4});
 
 console.log('More than $4:', query5);
 
@@ -109,7 +113,7 @@ Use _.sortBy to order the list by inventory (from lowest to highest).
 ===================== */
 
 var query6;
-
+query6 = _.sortBy(bakedGoods, function(b){return b.inventory});
 console.log('Sorted by inventory (lowest to highest):', query6);
 
 /* =====================
@@ -117,12 +121,30 @@ Use _.groupBy to organize the baked goods by type.
 ===================== */
 
 var query7;
-
+query7 = _.groupBy(bakedGoods, function(b){return b.type});
 console.log('Grouped by type:', query7);
+
+
+var printMenu = function(query){
+  //console.log(query);
+  //console.log('Outer Loop Values',query);
+  var key = Object.keys(query);
+  var i = 0;
+   _.map(query, function(a)
+       { console.log(key[i]);
+         i+=1;
+         //console.log(a);
+         //console.log(Obj)
+         //console.log('Inner Loop Values',a);
+         _.map(a, function(obj){
+               console.log(obj.name, '.....', obj.price);
+          });                                  
+    });
+};  
+console.log(printMenu(query7));
 
 /* =====================
 Stretch Goal:
-
 Grouping by type (query7) changed the structure of our data. Instead of an array of
 objects (e.g. [{}, {}]), we have an object that contains arrays of objects
 (e.g. {'key1': [{}, {}], 'key2': [{}, {}]}). Let's do something this structure.

@@ -31,21 +31,71 @@
        }
        var one = justOne();
 ===================== */
-
+//var get_data = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json').done(function(response) {
+ /// console.log
+  //parsed = JSON.parse(response)
+//});
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
 
+
+
+console.log('Downloading Data');
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-crime-snippet.json");  
+console.log('Downloaded Data');
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+
+var parseData = function(downloaded_data) {
+  console.log('Parsing Data');
+  if(typeof downloaded_data !== 'undefined'){
+    var parse = JSON.parse(downloaded_data);
+    console.log(parse);
+    console.log('Parsed');
+  }
+  return parse;
+  //console.log(downloaded_data);
+}
+
+//filtering data based on drug crimes (keeping if narcotics/drug related and rape)
+var filter_data = function(parseData){
+  console.log('Filtering Data');
+  var cleaned_data = [];
+  _.map(parseData, function(parse){
+   // console.log(parse["General Crime Category"]);
+    if(parse["General Crime Category"] == 'Narcotic / Drug Law Violations') {
+      cleaned_data.push(parse)
+      console.log(cleaned_data);
+    };
+  });  
+  return cleaned_data;
+};
+
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+
+/* L.circleMarker([data_point.Y, data_point.X], pathOpts)
+      .bindPopup(data_point.FACILNAME_LABEL)
+      .addTo(map);*/
+
+var makeMarkers = function(parseData) {
+  console.log('Making Markers');
+  markers = [];
+  _.map(parseData, function(parse){
+    markers.push(L.circleMarker([parse.Lat, parse.Lng]).bindPopup(parse['Location Block']));
+  });
+  //console.log(markers);
+  return markers;
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(marker_object) {
+  console.log('Plotting Markers');
+  _.map(marker_object, function(marker){
+    marker.addTo(map);
+  });
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +116,12 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(marker_object) {
+  _.map(marker_object, function(marker){
+    console.log('Removed Marker', marker._latlng.lat, marker._latlng.lng)
+    map.removeLayer(marker);
+  });
+};
 
 /* =====================
   Optional, stretch goal
@@ -99,7 +154,8 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 
 downloadData.done(function(data) {
   var parsed = parseData(data);
-  var markers = makeMarkers(parsed);
+  var filter_parsed = filter_data(parsed);
+  var markers = makeMarkers(filter_parsed);
   plotMarkers(markers);
-  removeMarkers(markers);
+  //removeMarkers(markers);
 });

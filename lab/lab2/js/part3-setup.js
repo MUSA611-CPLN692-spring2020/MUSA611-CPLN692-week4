@@ -13,6 +13,7 @@ var numericField1, numericField2, booleanField, stringField;
 /* =====================
   Set up our map
 ===================== */
+console.log('My Data', myData);
 var map = L.map('map', {
   center: [39.9522, -75.1639],
   zoom: 14
