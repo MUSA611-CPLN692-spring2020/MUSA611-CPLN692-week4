@@ -51,9 +51,10 @@ var makeMarkers = function(points) {
   points.forEach(function(point){
       var lat = point.Y;
       var lon = point.X;
+      var name = point.NAME;
 
       var feature = {type: 'Feature',
-          properties: point,
+          properties: {'name': name},
           geometry: {
               type: 'Point',
               coordinates: [lon,lat]
@@ -61,17 +62,16 @@ var makeMarkers = function(points) {
       };
 
       markers.push(feature);
-
   });
 
-  return markers;
+  geoJson = { type: 'FeatureCollection', features: markers };
+  return geoJson;
 };
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
 var plotMarkers = function(markers) {
-  var geoJson = { type: 'FeatureCollection', features: markers };
-  L.geoJson(geoJson).addTo(map);
+  L.geoJson(markers).addTo(map);
 };
 
 // At this point you should see a bunch of markers on your map if
@@ -93,7 +93,17 @@ var plotMarkers = function(markers) {
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+
+// This does not work, but it clears everything.
+
+// I tried to play around with a filter that clears all layers that look like
+// markers, but this did not work; I ended up either removing up all or nothing.
+
+var removeMarkers = function(layer) {
+  map.eachLayer(function (layer) {
+    map.removeLayer(layer);
+  });
+};
 
 /* =====================
   Optional, stretch goal
