@@ -27,9 +27,16 @@
   Define a resetMap function to remove markers from the map and clear the array of markers
 ===================== */
 var resetMap = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+  console.log('Removing Markers');
+  console.log(myMarkers);
+  //var markers;
+  _.map(myMarkers, function(marker){
+      console.log('Removed Marker', marker._latlng.lat, marker._latlng.lng);
+      map.removeLayer(marker);  
+  }); 
+  myMarkers.length = 0;
+  console.log(myMarkers);
+  return myMarkers  ;
 };
 
 /* =====================
@@ -37,18 +44,93 @@ var resetMap = function() {
   will be called as soon as the application starts. Be sure to parse your data once you've pulled
   it down!
 ===================== */
-var getAndParseData = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+
+//This function parses the data and returns the parsed data
+var parseData = function(downloaded_data) {
+  console.log('Parsing Data');
+  if(typeof downloaded_data !== 'undefined'){
+    var parse = JSON.parse(downloaded_data);
+    return parse;
+  }
+};
+
+//this function downloads the data and then passes it into the parse function to parse the data. 
+//It returns the output of the parsed data
+var getAndParseData = function(){
+  $.ajax({
+    url: "https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-crime-snippet.json"
+  })
+   .done(function(data){ 
+     myData = parseData(data); 
+     console.log('My Data', myData);
+     console.log('My Markers', myMarkers);
+     return myData;
+    });
 };
 
 /* =====================
   Call our plotData function. It should plot all the markers that meet our criteria (whatever that
   criteria happens to be — that's entirely up to you)
 ===================== */
-var plotData = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+//Lat: 39.9771532618949
+//Lng: -75.1716547369047
+
+//This function filters the parsed data according to the filters inputted by the user
+//The output of this is a filtered list that is returned
+var filter_data = function(myData){
+  console.log(myData);
+  //var cleanedData = [];
+  var lat = numericField1;
+  console.log(lat);
+  var long = numericField2;
+  console.log(long);
+  var bool = booleanField;
+  console.log(bool);
+  var str = stringField;
+  console.log(str);
+
+  var x = [];
+
+  _.map(myData, function(data){
+    //console.log(data);
+    if(data.Lat >= lat && data.Lng >= long){
+      console.log('1'); 
+      x.push(data);
+    }
+    return x;
+  });
+
+  myData = x;
+  console.log('x', myData);
+  return myData;
 };
+
+//This function makes markers from the filtered data
+//The output of this function is passed into the plotMarkers function
+var makeMarkers = function(myData) {
+  console.log('Making Markers');
+  console.log('Marker', myMarkers);
+  _.map(myData, function(data){
+    myMarkers.push(L.circleMarker([data.Lat, data.Lng]).bindPopup(data['Location Block']));
+  });
+  console.log(myMarkers);
+  return myMarkers;
+};
+
+//This function plots the markers from above
+var plotMarkers  = function(myMarkers) {
+  console.log('Plotting Markers');
+  _.map(myMarkers, function(data){
+    data.addTo(map);
+  });
+};
+
+//This function calls the above functions
+var plotData = function() {
+  var filter = filter_data(myData);
+  var marker = makeMarkers(filter);
+  var plot = plotMarkers(marker);
+  return plot;
+};
+
+
