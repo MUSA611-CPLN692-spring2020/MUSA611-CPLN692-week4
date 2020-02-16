@@ -33,19 +33,32 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax(
+  'https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json'
+);
+
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+var parseData = function(downloadData){
+  return JSON.parse(downloadData);
+};
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(parsedData){
+  return _.map(parsedData, function(marker){
+    return L.marker([marker.LAT, marker.LNG]);
+  });
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(marker) {
+  _.each(marker, function(x){
+    return x.addTo(map);
+  });
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +79,11 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(marker) {
+  return _.map(marker, function(x){
+    map.removeLayer(x);
+  });
+};
 
 /* =====================
   Optional, stretch goal
@@ -101,5 +118,5 @@ downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
   plotMarkers(markers);
-  removeMarkers(markers);
+  removeMarkers(markers); // search Leaflet doc how to remove a marker
 });
