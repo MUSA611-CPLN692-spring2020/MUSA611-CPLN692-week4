@@ -33,18 +33,18 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/world-country-capitals.json");
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json");
 
 // var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/world-country-capitals.json").done(function(x) {xparsed = JSON.parse(x)});
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
 var parsedData = function(data) {
-  var each_country = JSON.parse(data);
-  var markerCoordinates = each_country.map(function(country) {
+  var all_crashes = JSON.parse(data);
+  var markerCoordinates = all_crashes.map(function(crash) {
   var coords = {
-      lat: country.CapitalLatitude,
-      long: country.CapitalLongitude
+      lat: crash.lat_final,
+      long: crash.long_final
 };
   return coords;
 });
@@ -104,8 +104,8 @@ var removeMarkers = function() {}; // look at leaflet documentation
 ===================== */
 
 var map = L.map('map', {
-  center: [8, 20],
-  zoom: 2
+  center: [40, -75.15],
+  zoom: 11
 });
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',

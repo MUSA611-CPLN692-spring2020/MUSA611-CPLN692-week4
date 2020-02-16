@@ -68,7 +68,7 @@ to true.
 
 var query1;
 
-console.log('printMenu is a function:', query1);
+console.log('printMenu is a function:', _.isFunction(printMenu));
 
 /* =====================
 Is bakedGoods an array? Answer this question with underscore. Should evaluate
@@ -77,7 +77,7 @@ to true.
 
 var query2;
 
-console.log('bakedGoods is an array:', query2);
+console.log('bakedGoods is an array:', _.isArray(bakedGoods));
 
 /* =====================
 Is the first element in bakedGoods an object? Answer this question with
@@ -86,7 +86,7 @@ underscore. Should evaluate to true.
 
 var query3;
 
-console.log('The first element in bakedGoods is an object:', query3);
+console.log('The first element in bakedGoods is an object:', _.isObject(bakedGoods[0]));
 
 /* =====================
 Use _.where to return all cakes. Or bread. Whichever is your favorite.
@@ -94,7 +94,7 @@ Use _.where to return all cakes. Or bread. Whichever is your favorite.
 
 var query4;
 
-console.log('All bread. Or cakes:', query4);
+console.log('All bread. Or cakes:', _.where(bakedGoods, {type: 'Bread'}));
 
 /* =====================
 Use _.filter to return all baked goods that cost more than $4.
@@ -102,7 +102,7 @@ Use _.filter to return all baked goods that cost more than $4.
 
 var query5;
 
-console.log('More than $4:', query5);
+console.log('More than $4:', _.filter(bakedGoods, function(bakedGoods) {return bakedGoods['price'] > 4}));
 
 /* =====================
 Use _.sortBy to order the list by inventory (from lowest to highest).
@@ -110,15 +110,13 @@ Use _.sortBy to order the list by inventory (from lowest to highest).
 
 var query6;
 
-console.log('Sorted by inventory (lowest to highest):', query6);
+console.log('Sorted by inventory (lowest to highest):', _.sortBy(bakedGoods, 'inventory'));
 
 /* =====================
 Use _.groupBy to organize the baked goods by type.
 ===================== */
 
-var query7;
-
-console.log('Grouped by type:', query7);
+var query7 = console.log('Grouped by type:', _.groupBy(bakedGoods, 'type'));
 
 /* =====================
 Stretch Goal:
@@ -141,7 +139,8 @@ Whole Wheat ... $4.49
 
 ===================== */
 
-// printMenu2(query7);
+printMenu2(query7);
+
 
 /* =====================
 Stretch Goal (seriously, this is a bit tough at first!):
