@@ -66,5 +66,3 @@ addButton.click(function() {
   var oldCount = parseInt(addCounter.text(), 10);
   runAfter(addOneToCounter, oldCount, delay, delayFunc);
 });
-
-
