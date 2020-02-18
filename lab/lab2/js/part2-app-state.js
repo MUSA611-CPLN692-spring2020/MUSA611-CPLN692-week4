@@ -53,7 +53,7 @@ var makeMarkers = function(parseData) {
 // and puts them on the map
 var plotMarkers = function(markers) {
   return _.map(markers, function(x) {
-            return x.addTo(map);})
+    x.addTo(map);})
 };
 
 
@@ -76,6 +76,7 @@ var plotMarkers = function(markers) {
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
+
 var removeMarkers = function(markers) {
   return _.map(markers,function(x){
     map.removeLayer(x)
