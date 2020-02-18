@@ -26,10 +26,12 @@
 /* =====================
   Define a resetMap function to remove markers from the map and clear the array of markers
 ===================== */
+
 var resetMap = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+   _.map(myMarkers,function(x){
+    map.removeLayer(x);
+  })
+  return myMarkers;
 };
 
 /* =====================
@@ -38,17 +40,22 @@ var resetMap = function() {
   it down!
 ===================== */
 var getAndParseData = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
-};
+  $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json").done(function(x){return myData=JSON.parse(x)});
+}
 
 /* =====================
   Call our plotData function. It should plot all the markers that meet our criteria (whatever that
   criteria happens to be — that's entirely up to you)
 ===================== */
 var plotData = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+  filteredData = _.filter(myData, function(obj) {
+      var numericFilter = obj.DAY_OF_WEE >= numericField1 && obj.DAY_OF_WEE <= numericField2;
+      var stringFilter = obj.SCH_ZONE_I == stringField;
+      var booleanFilter = (obj.ALCOHOL_RE == 1) == booleanField;
+      return numericFilter && stringFilter && booleanFilter;
+    });
+  myMarkers = _.map(filteredData, function(obj) {return L.marker([obj.LAT, obj.LNG])});
+  _.map(myMarkers, function(marker) {
+      return marker.addTo(map);
+  });
 };
