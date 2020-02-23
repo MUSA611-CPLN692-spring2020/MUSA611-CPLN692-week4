@@ -8,4 +8,7 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
   minZoom: 0,
   maxZoom: 20,
   ext: 'png'
-}).addTo(map);
+}).addTo(map);  
+
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-solar-installations.json");
+downloadData.done(console.log);

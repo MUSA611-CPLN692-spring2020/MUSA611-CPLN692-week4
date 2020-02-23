@@ -33,19 +33,52 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax("https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-solar-installations.json");
+var parsed_data;
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+var parseData = function(data) {
+  var parsed = JSON.parse(data);
+  parsed_data = _.map(parsed,function(arr){
+    delete arr['LAT','LONG_','THUMB_URL'];
+    arr.isold = arr.YEARBUILT >= 2010;
+    arr.islarge = arr.KW > 54;
+    return arr;
+  })
+  return parsed_data;
+};
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(data) {
+  var marks = _.map(data, function(arr){
+    var color;
+    if (arr.isold && arr.islarge){
+      color = '#0000FF';
+    } else if (!arr.isold && arr.islarge) {
+      color = '#00FF00';
+    } else if (arr.isold && !arr.islarge) {
+      color = '#00F090';
+    } else {
+      color = '##FF0000';
+    }
+    var pathOpts = {'radius': Math.log(arr.KW) * 5, 
+                'fillColor': color}  
+    var circle = L.circleMarker([arr.Y, arr.X], pathOpts)
+        .bindPopup(arr.DEVELOPER);
+    return circle;
+  });
+  return marks;
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(marks) {
+  _.map(marks, function(circle){
+    circle.addTo(map);
+  })
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +99,11 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(marks) {
+    _.map(marks, function(circle){
+    map.removeLayer(circle);
+  })
+};
 
 /* =====================
   Optional, stretch goal
@@ -96,10 +133,9 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 /* =====================
  CODE EXECUTED HERE!
 ===================== */
-
 downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
   plotMarkers(markers);
-  removeMarkers(markers);
+  //removeMarkers(markers);
 });
