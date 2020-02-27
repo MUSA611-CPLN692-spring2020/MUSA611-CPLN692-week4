@@ -9,3 +9,29 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
   maxZoom: 20,
   ext: 'png'
 }).addTo(map);
+
+var unparsed;
+$.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json')
+.done(function(response){
+  parsed = JSON.parse(response)})
+//$.ajax('').done(function(x){console.log(x)})
+//theData = promise.done(console.log);
+//bikeCrash = JSON.parse(theData);
+
+parsed.map(function(obj){
+  return {'lat': obj.lat_final, 'long': obj.long_final}
+})
+
+/*
+var holder;
+var unparsed;
+$.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json')
+.done(function(x){
+  unparsed(x)})
+
+  $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json')
+  .done(function(response){
+    parsed = JSON.parse(response)
+  })
+  */
+// sideEffect
