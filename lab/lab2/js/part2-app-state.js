@@ -33,19 +33,28 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json');
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+var parseData = function(data) {
+  return JSON.parse(data);
+};
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(data) {
+  addmarker = _.map(data, function(x){
+    return L.marker([x.lat_final, x.long_final]);
+  });
+  return addmarker;
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(marker) {
+  _.each(marker, function(x){return x.addTo(map);});
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +75,9 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(marker) {
+  _.each(marker, function(x){return map.removeLayer(x);});
+};
 
 /* =====================
   Optional, stretch goal
@@ -100,6 +111,8 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
-  plotMarkers(markers);
-  removeMarkers(markers);
+  //removeMarkers(markers);
+  var fatal = _.filter(parsed, function(x){return x.FATAL == 1;});
+  var fatalmarkers = makeMarkers(fatal);
+  plotMarkers(fatalmarkers);
 });
