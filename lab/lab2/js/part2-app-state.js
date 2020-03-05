@@ -33,19 +33,32 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+var downloadData = $.ajax("http://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json");
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+var parseData = function(data) {
+  return JSON.parse(data);
+};
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(data) {
+  var markers = [];
+  for(var i = 0; i<data.length; i++){
+    var mark = L.marker([data[i].LAT, data[i].LNG]);
+    markers.push(mark);
+  }
+  return markers;
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(markers) {
+  for(var i = 0; i< markers.length; i++){
+    markers[i].addTo(map);
+  }
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +79,11 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+var removeMarkers = function(markers) {
+  for(var i = 0; i< markers.length; i++){
+  map.removeLayer(markers[i]);
+  }
+};
 
 /* =====================
   Optional, stretch goal
