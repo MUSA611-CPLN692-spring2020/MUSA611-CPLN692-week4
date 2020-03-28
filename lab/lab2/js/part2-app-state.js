@@ -46,7 +46,7 @@ var createMarkers = function(crash){
   var long = crash.long_final;
   var marker = L.marker([lat,long]);
   return marker;
-}
+};
 
 var makeMarkers = function(parsedData) {
   markers = _.map(parsedData, createMarkers);
