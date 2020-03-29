@@ -32,20 +32,53 @@
        var one = justOne();
 ===================== */
 
-// Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+// Use the data source URL from lab 1 in this 'ajax' function: done
+var downloadData = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/world-country-capitals.json');
+
+//var json = $.ajax('https://raw.githubusercontent.com/Chyanne-E/MUSA611-CPLN692-week4/master/data/phillySchools.js');
+
+//console.log(json);
+
+console.log(downloadData);
 
 // Write a function to prepare your data (clean it up, organize it
 // as you like, create fields, etc)
-var parseData = function() {};
+
+//var parseData = JSON.parse(downloadData);
+var parseData = function(downloadData) {
+  var countries = JSON.parse(downloadData);
+
+  var markerCoordinates = countries.map(function(country) {
+    var coords = {
+      lat: country.CapitalLatitude,
+      long: country.CapitalLongitude
+    };
+
+    return coords;
+  });
+
+  return markerCoordinates;
+};
 
 // Write a function to use your parsed data to create a bunch of
 // marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(parsedData) {
+  var markers = [];
+
+  markers = parsedData.map(function(coords){
+    return L.marker([coords.lat, coords.long]);
+  });
+
+  return markers;
+};
 
 // Now we need a function that takes this collection of markers
 // and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(markers) {
+  markers.forEach(function(marker){
+    return marker.addTo(map);
+  });
+};
 
 // At this point you should see a bunch of markers on your map if
 // things went well.
@@ -66,7 +99,7 @@ var plotMarkers = function() {};
 
 // Look to the bottom of this file and try to reason about what this
 // function should look like
-var removeMarkers = function() {};
+// var removeMarkers = function() {};
 
 /* =====================
   Optional, stretch goal
@@ -82,7 +115,7 @@ var removeMarkers = function() {};
 ===================== */
 
 var map = L.map('map', {
-  center: [39.9522, -75.1639],
+  center: [32.297863, -64.784553], //zoome map to Hamilton Bermuda
   zoom: 14
 });
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
