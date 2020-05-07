@@ -22,7 +22,6 @@
 
   Remember, this is open-ended. Try to see what you can produce.
 ===================== */
-
 /* =====================
   Define a resetMap function to remove markers from the map and clear the array of markers
 ===================== */
@@ -30,6 +29,13 @@ var resetMap = function() {
   /* =====================
     Fill out this function definition
   ===================== */
+  // remove markers, use myMarkers global variable
+  console.log('boolean field');
+  if(booleanField==true){
+    _.each(myMarkers, function(m){map.removeLayer(m)});
+    // clear array of markers
+    myMarkers = []; 
+  }
 };
 
 /* =====================
@@ -41,14 +47,43 @@ var getAndParseData = function() {
   /* =====================
     Fill out this function definition
   ===================== */
+  // myData is a global variable
+  var promise = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-solar-installations.json');
+  // Write a function to prepare your data (clean it up, organize it
+  // as you like, create fields, etc
+  var parseData = function(data) {return parsed=JSON.parse(data)};
+
+  var create_marker = function(row){
+    var lat=row.Y;
+    var lng=row.X;
+    var label=row.NAME;
+    var yearBuilt = row.YEARBUILT;
+    var marker = L.marker([lat, lng]).bindPopup("<b>Name: </b>"+label+"<br>Year Built: "+yearBuilt).openPopup();
+    return marker;
+  }
+  var makeMarkers = function(cleanedData) {
+  var markers = _.map(cleanedData, create_marker);
+  return(markers)}
+
+  promise.done(function(data) {
+    myData = parseData(data);
+    myMarkers= makeMarkers(myData);
+    console.log(myMarkers)
+    });
+
+  console.log(myMarkers);
+  // how to save the data into the global variable? !!! NOT SURE HOW TO SAVE THE DATA after .done()
+
 };
 
 /* =====================
   Call our plotData function. It should plot all the markers that meet our criteria (whatever that
   criteria happens to be — that's entirely up to you)
 ===================== */
-var plotData = function() {
+var plotData = function(markers) {
   /* =====================
     Fill out this function definition
   ===================== */
+
+
 };

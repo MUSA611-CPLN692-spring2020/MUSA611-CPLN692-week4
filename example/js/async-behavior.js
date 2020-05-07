@@ -47,7 +47,7 @@ var seconds = function(x) { return x * 1000; };
 var ms = function(x) { return x; };
 
 // Logic related to button/counter
-var addButton = $("#addButton");
+var addButton = $("#addButton"); // refering to the id. addButton in the html page
 var addCounter = $("#addCounter");
 var count = 0; // this variable will be updated along with the visual count
 var delay = 2; // play with this value to change the delay after clicking
@@ -65,6 +65,17 @@ addCounter.text(count); // Set initial value
 addButton.click(function() {
   var oldCount = parseInt(addCounter.text(), 10);
   runAfter(addOneToCounter, oldCount, delay, delayFunc);
-});
+}); // execute this function when someone clicks the page 
+// ajax asynchronous java
+// $ is jquery
 
+// 
+/* promise = $ajax(some url )
+promise.done(function(x)) , 
+so when the request is returned, the function is 
+executed with the thing that was returned .
 
+if you get a string, can parse the data 
+parsedData = JSON.parse
+
+parsedData.map( )
