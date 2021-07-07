@@ -9,3 +9,13 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
   maxZoom: 20,
   ext: 'png'
 }).addTo(map);
+
+var promise = $.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/json/philadelphia-bike-crashes-snippet.json');
+promise.done(console.log); // this prints it in json form
+
+var unparsed; // converting to csv
+promise.done(x=> unparsed = x); // saving the json as a new variable 'unparsed'
+parsed = JSON.parse(unparsed); // parsing 'unparsed'
+console.log(parsed);
+
+// $ means jquery
